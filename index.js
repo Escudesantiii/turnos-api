@@ -40,5 +40,13 @@ app.get('/reservar', (req, res) => {
       res.json({ ok: true });
   });
 });
+app.get('/horarios', (req, res) => {
+  const medicoId = req.query.medico_id;
+  db.query('SELECT dia FROM horarios WHERE medico_id=?',
+    [medicoId], (err, results) => {
+      if (err) return res.json({ error: err.message });
+      res.json(results);
+  });
+});
 
 app.listen(process.env.PORT || 3000);
